@@ -1,7 +1,10 @@
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
+import { config } from "dotenv";
 import Deck from "./models/Deck";
 
+mongoose.set('strictQuery', false);
+config();
 const app = express();
 
 const PORT = 5000;
@@ -17,9 +20,7 @@ app.post('/decks', async (req: Request, res: Response) => {
 	res.json(createdDeck);
 });
 
-mongoose.connect(
-	'mongodb+srv://everettsjunk:MnS8fEM3fEecLWsh@cluster0.gxu1mcz.mongodb.net/mern-typescript?retryWrites=true&w=majority'
-).then(() => {
+mongoose.connect(process.env.MONGO_URL!).then(() => {
 	console.log(`listening on port ${PORT}`);
 	app.listen(PORT);
 });
