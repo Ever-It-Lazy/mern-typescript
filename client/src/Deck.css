@@ -5,14 +5,14 @@
   text-align: center;
 }
 
-.App {
+.Deck {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
 	justify-content: center;
 }
 
-.decks {
+.cards {
 	display: grid;
 	width: 600px;
 	margin: 0 auto;
@@ -20,7 +20,7 @@
 	grid-template-columns: repeat(3, 1fr);
 }
 
-.decks li {
+.cards li {
 	padding-top: 30px;
 	position: relative;
 	display: flex;
@@ -32,7 +32,7 @@
 	border-radius: 10px;
 }
 
-.decks li button {
+.cards li button {
 	position: absolute;
 	width: 10px;
 	height: 10px;
@@ -42,7 +42,7 @@
 	right: 5px;
 }
 
-.decks li:hover {
+.cards li:hover {
 	background: #eee;
 	cursor: pointer;
 }
