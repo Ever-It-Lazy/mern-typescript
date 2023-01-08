@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import reactLogo from './assets/react.svg';
 import './App.css';
 import { Link } from 'react-router-dom';
-
-type TDeck = {
-	title: string;
-	_id: string;
-}
+import { deleteDeck } from './api/deleteDeck';
+import { createDeck } from './api/createDeck';
+import { getDecks, TDeck } from './api/getDecks';
 
 function App() {
 	const [decks, setDecks] = useState<TDeck[]>([]);
@@ -14,34 +11,22 @@ function App() {
 
 	const handleCreateDeck = async (e: React.FormEvent) => {
 		e.preventDefault();
-		const deck = await fetch('http://localhost:5000/decks', {
-			method: 'POST',
-			body: JSON.stringify({
-				title,
-			}),
-			headers: {
-				"Content-Type": "application/json"
-			}
-		}).then((res) => res.json());
+		const deck = await createDeck(title);
 		setDecks([...decks, deck]);
 		setTitle("");
 	};
 
 	const handleDeleteDeck = async (deckId: string) => {
-		await fetch(`http://localhost:5000/decks/${deckId}`, {
-			method: 'DELETE'
-		});
+		await deleteDeck(deckId);
 		setDecks(decks.filter((deck) => deck._id !== deckId));
 	};
 
 	useEffect(() => {
 		(async () => {
-			const newDecks = await fetch('http://localhost:5000/decks')
-				.then((res) => res.json());
+			const newDecks = await getDecks();
 			setDecks(newDecks);
 		})();
 	}, []);
-
 
 	return (
 		<div className="App">
